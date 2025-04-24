@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package protos;
+
+// The Foo service definition.
+service FooService {
+    // Sends a generic request and receives a generic response.
+    rpc GenericMethod (GenericRequest) returns (GenericResponse);
+}
+
+// The request message containing a generic payload.
+message GenericRequest {
+    string id = 1;
+    string payload = 2;
+}
+
+// The response message containing a generic result.
+message GenericResponse {
+    string id = 1;
+    string result = 2;
+}
