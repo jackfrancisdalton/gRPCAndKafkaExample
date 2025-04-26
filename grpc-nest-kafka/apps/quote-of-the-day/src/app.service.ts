@@ -25,8 +25,15 @@ export class AppService {
   }
 
   async getQuote(): Promise<Proto.quote.QuoteResponse> {
+    console.log('AppService: getQuote() called');
+  
+    console.log('AppService: calling DateService.CurrentDate()');
     const dateRes    = await firstValueFrom(this.dateClient.getCurrentDate({}));
+    console.log('AppService: DateService.CurrentDate() returned: ', JSON.stringify(dateRes));
+
+    console.log('AppService: calling WeatherService.GetWeather()');
     const weatherRes = await firstValueFrom(this.weatherClient.getWeather({ date: dateRes }));
+    console.log('AppService: WeatherService.GetWeather() returned: ', JSON.stringify(weatherRes));
 
     const map = {
       sunny:  ['Sunshine is the best medicine.', 'Unknown', '2020-06-01'],
@@ -39,6 +46,9 @@ export class AppService {
     const [quote, author, since] = map[key];
     const daysSince = Math.floor((new Date(dateRes.iso).getTime() - new Date(since).getTime())/(1000*60*60*24));
 
-    return { quote, author, daysSince };
+    const res = { quote, author, daysSince };
+    console.log('AppService: getQuote() will return: ', JSON.stringify(res));
+    
+    return res;
   }
 }

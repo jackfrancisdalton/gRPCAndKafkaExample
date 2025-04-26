@@ -9,6 +9,7 @@ export class AppController {
 
   @GrpcMethod('QuoteService', 'GetQuote')
   async getQuote(_: quote.QuoteRequest): Promise<quote.QuoteResponse> {
+    console.log('AppController: getQuote() called');
     return this.appService.getQuote();
   }
 }

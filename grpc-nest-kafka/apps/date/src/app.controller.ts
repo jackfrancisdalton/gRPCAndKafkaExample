@@ -9,6 +9,7 @@ export class AppController {
 
     @GrpcMethod('DateService', 'GetCurrentDate')
     getCurrentDate(_: Proto.date.DateRequest): Proto.date.DateResponse {
+      console.log('AppController: getCurrentDate() called')
       return this.appService.getCurrentDate();
     }
 }

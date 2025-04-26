@@ -35,10 +35,14 @@ export class AppService {
     weather: string;
     quote: Proto.quote.QuoteResponse;
   }> {
+    console.log("AppService: getContent() called")
     const date    = await firstValueFrom(this.dateClient.getCurrentDate({}));
     const weather = await firstValueFrom(this.weatherClient.getWeather({ date }));
     const quote   = await firstValueFrom(this.quoteClient.getQuote({ date, weather: weather.weather }));
 
-    return { date, weather: weather.weather, quote };
+    const res = { date, weather: weather.weather, quote };
+    console.log("AppService: getContent() will return: ", JSON.stringify(res));
+
+    return res;
   }
 }

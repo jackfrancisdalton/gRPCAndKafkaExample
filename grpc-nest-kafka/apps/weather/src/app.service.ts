@@ -16,10 +16,14 @@ export class AppService {
   }
 
   async getWeather(): Promise<Proto.weather.WeatherResponse> {
+    console.log('AppService: getWeather() called');
     const date = await firstValueFrom(this.dateClient.getCurrentDate({}));
     const options: string[] = ['sunny', 'slightly rainy', 'cloudy', 'windy'];
     const idx = (date.day % options.length);
 
-    return { weather: options[idx] || "FAIL" };
+    const res = { weather: options[idx] || "FAIL" };
+    console.log('AppService: getWeather() will return: ', JSON.stringify(res));
+
+    return res;
   }
 }

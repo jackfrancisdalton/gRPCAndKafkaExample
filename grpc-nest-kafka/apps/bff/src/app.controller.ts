@@ -7,11 +7,12 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  async getHello(): Promise<{
+  async getContent(): Promise<{
     date: Proto.date.DateResponse;
     weather: string;
     quote: Proto.quote.QuoteResponse;
   }> {
+    console.log('AppController: getContent() called')
     return await this.appService.getContent();
   }
 }
