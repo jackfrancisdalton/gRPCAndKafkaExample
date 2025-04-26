@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package weather;
+
+import "date.proto";
+
+option java_package = "com.example.weather";
+option go_package = "github.com/yourorg/yourrepo/shared-proto/weatherpb;weatherpb";
+
+// Takes a date (from your DateService) and returns a simple weather description.
+message WeatherRequest {
+  date.DateResponse date = 1;
+}
+
+message WeatherResponse {
+  // e.g. "sunny", "slightly rainy", etc.
+  string weather = 1;
+}
+
+service WeatherService {
+  rpc GetWeather(WeatherRequest) returns (WeatherResponse);
+}

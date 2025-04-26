@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package bff;
+
+import "date.proto";
+import "weather.proto";
+import "quote-of-the-day.proto";
+
+option java_package = "com.example.bff";
+option go_package = "github.com/yourorg/yourrepo/shared-proto/bffpb;bffpb";
+
+// A single “dashboard” call that the frontend can use to get date, weather & quote in one go.
+message DashboardRequest {}
+
+message DashboardResponse {
+  date.DateResponse     date    = 1;
+  string                weather = 2;
+  quote.QuoteResponse   quote   = 3;
+}
+
+service BffService {
+  rpc GetDashboard(DashboardRequest) returns (DashboardResponse);
+}

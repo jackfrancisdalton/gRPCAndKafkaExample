@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package quote;
+
+import "date.proto";
+import "weather.proto";
+
+option java_package = "com.example.quote";
+option go_package = "github.com/yourorg/yourrepo/shared-proto/quotepb;quotepb";
+
+// The BFF (or another orchestrator) passes both date & weather
+message QuoteRequest {
+  date.DateResponse   date    = 1;
+  string              weather = 2;  // you could also import weather.WeatherResponse here
+}
+
+// QuoteResponse carries the text, author, and the number of days since it was originally said.
+message QuoteResponse {
+  string quote      = 1;
+  string author     = 2;
+  int32  days_since = 3;
+}
+
+service QuoteService {
+  // Chooses a quote based on date + weather
+  rpc GetQuote(QuoteRequest) returns (QuoteResponse);
+}
