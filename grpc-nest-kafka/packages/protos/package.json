@@ -5,6 +5,10 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./src/protos/*.proto": {
+      "import": "./src/protos/*.proto",
+      "require": "./src/protos/*.proto"
     }
   },
   "version": "0.0.1",

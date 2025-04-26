@@ -9,7 +9,7 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         package: 'weather',
-        protoPath: require.resolve('@repo/protos/protos/weather.proto'),
+        protoPath: require.resolve('@repo/protos/src/protos/weather.proto'),
         url: process.env.QUOTE_OF_THE_DAY_GRPC_URL || '0.0.0.0:50053',
       },
     },

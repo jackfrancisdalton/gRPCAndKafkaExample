@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
+import { GrpcMethod } from '@nestjs/microservices';
+import { weather } from '@repo/protos';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @GrpcMethod('WeatherService', 'GetWeather')
+  async getWeather(_: weather.WeatherRequest): Promise<weather.WeatherResponse> {
+    return this.appService.getWeather();
   }
 }

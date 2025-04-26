@@ -9,7 +9,7 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         package: 'date',             
-        protoPath: require.resolve('@repo/protos/protos/date.proto'),
+        protoPath: require.resolve('@repo/protos/src/protos/date.proto'),
         url: process.env.DATE_GRPC_URL || '0.0.0.0:50051',
       },
     },
