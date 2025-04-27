@@ -277,7 +277,5 @@ Turborepo solves this by caching each package/app, then if nothing has changed i
 To execute the Turbo scripts you simply run `pnpm turbo run build` or `pnpm turbo run dev`.
 
 # WIP: Future Improvements:
-- clean up env variables binding in each app
-- generate the Readme content
-- clean up logging so it's more maintainable and informative for people using the app
+- Clean up logging so it's more maintainable and informative for people using the app
 - Add Kafka docker container and integrate some basic behaviour
