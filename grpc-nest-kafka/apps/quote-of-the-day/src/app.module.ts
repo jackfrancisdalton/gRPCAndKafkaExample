@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-
+import { DATE_SERVICE_GRPC_URL, WEATHER_SERVICE_GRPC_URL } from '@repo/common-config';
 @Module({
   imports: [
     ClientsModule.register([
@@ -12,7 +12,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           package: 'date',
           protoPath: require.resolve('@repo/protos/src/protos/date.proto'),
-          url: process.env.DATE_SERVICE_URL || '0.0.0.0:50051',
+          url: DATE_SERVICE_GRPC_URL || '0.0.0.0:50051',
         },
       },
       {
@@ -21,7 +21,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           package: 'weather',
           protoPath: require.resolve('@repo/protos/src/protos/weather.proto'),
-          url: process.env.WEATHER_SERVICE_URL || '0.0.0.0:50053',
+          url: WEATHER_SERVICE_GRPC_URL || '0.0.0.0:50053',
         },
       },
     ]),
