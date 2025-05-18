@@ -256,6 +256,9 @@ importers:
       '@repo/common-config':
         specifier: workspace:*
         version: link:../../packages/common-config
+      '@repo/grpc-logger':
+        specifier: workspace:*
+        version: link:../../packages/grpc-logger
       '@repo/protos':
         specifier: workspace:*
         version: link:../../packages/protos
@@ -365,6 +368,9 @@ importers:
       '@repo/common-config':
         specifier: workspace:*
         version: link:../../packages/common-config
+      '@repo/grpc-logger':
+        specifier: workspace:*
+        version: link:../../packages/grpc-logger
       '@repo/protos':
         specifier: workspace:*
         version: link:../../packages/protos

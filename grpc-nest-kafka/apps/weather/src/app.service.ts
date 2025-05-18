@@ -2,6 +2,7 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import * as Proto from '@repo/protos';
 import { firstValueFrom, Observable } from 'rxjs';
+import { createLoggingClient } from '@repo/grpc-logger'
 
 interface DateService {
   getCurrentDate(request: Proto.date.DateRequest): Observable<Proto.date.DateResponse>;
@@ -11,8 +12,11 @@ interface DateService {
 export class AppService {
   private dateClient: DateService;
 
-  constructor(@Inject('DATE_SERVICE') private readonly client: ClientGrpc) {
-    this.dateClient = this.client.getService<DateService>('DateService');
+  constructor(@Inject('DATE_SERVICE') private readonly dateGrpcClient: ClientGrpc) {
+    this.dateClient = createLoggingClient(
+      this.dateGrpcClient.getService<DateService>('DateService'),
+      'DateService',
+    );
   }
 
   async getWeather(): Promise<Proto.weather.WeatherResponse> {
