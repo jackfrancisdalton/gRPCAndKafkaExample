@@ -3,6 +3,17 @@ This project is intended for learning purposes, demonstrating how to configure N
 
 > Disclaimer: The actual application being implemented here does not warrent a microservices approach given how simple it is, the simplicity of the business logic and limited scope of each microservices are to make understanding the structure/gRPC elements easier without getting bogged down in more complex business logic.
 
+## How to run:
+1. Clone the repository
+2. (optional) Open the repository in VS-code with the dev-container 
+3. navigate to grpc-nest-kafa directory in your terminal
+3. Run `pnpm install`
+4. Run `pnpm build` 
+3. Run `pnpm run dev`
+
+You should see the application spin up and be able to inspect the loggs from each of the microservices in the turborepo output.
+
+
 ### Application Microservices
 #### The monorepo is made up of 4 services:
 
