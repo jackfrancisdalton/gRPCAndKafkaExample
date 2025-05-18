@@ -1,14 +1,7 @@
 ## Project Overview
-This project is intended for learning purposes, and provides a *extremely* simple example of how you can implement:
-- A turborepo...
-- Containing NestJS microservices...
-- That communicate over gRPC...
-- And Kafka...
-- That use packages to share configuration information...
-- and can provide responses over HTTP in JSON format
+This project is intended for learning purposes, demonstrating how to configure NestJs microservices that communicate over gRPC inside of a Monorepo (using Turborepo) structure
 
-> Disclaimer: This repo has been created as a reference point for anyone looking to adopt these patterns.
-> As a result the business logic in each microservice is maximally simple, and does not reflect what you'd actually use microservices for.
+> Disclaimer: The actual application being implemented here does not warrent a microservices approach given how simple it is, the simplicity of the business logic and limited scope of each microservices are to make understanding the structure/gRPC elements easier without getting bogged down in more complex business logic.
 
 ### Application Microservices
 #### The monorepo is made up of 4 services:
