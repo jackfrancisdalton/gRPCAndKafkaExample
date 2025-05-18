@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
 import * as Proto from '@repo/protos';
+import { createLoggingClient } from '@repo/grpc-logger'
 
 interface DateService {
   getCurrentDate(request: Proto.date.DateRequest): Observable<Proto.date.DateResponse>;
@@ -25,9 +26,18 @@ export class AppService {
     @Inject('WEATHER_SERVICE') private readonly weatherCGrpclient: ClientGrpc,
     @Inject('QUOTE_SERVICE') private readonly quoteGrpcClient: ClientGrpc,
   ) {
-    this.dateClient = this.dateGrpcClient.getService<DateService>('DateService');
-    this.weatherClient = this.weatherCGrpclient.getService<WeatherService>('WeatherService');
-    this.quoteClient = this.quoteGrpcClient.getService<QuoteService>('QuoteService');
+    this.dateClient    = createLoggingClient(
+      this.dateGrpcClient.getService<DateService>('DateService'),
+      'DateService',
+    );
+    this.weatherClient = createLoggingClient(
+      this.weatherCGrpclient.getService<WeatherService>('WeatherService'),
+      'WeatherService',
+    );
+    this.quoteClient   = createLoggingClient(
+      this.quoteGrpcClient.getService<QuoteService>('QuoteService'),
+      'QuoteService',
+    );
   }
 
   async getContent(): Promise<{
@@ -35,13 +45,11 @@ export class AppService {
     weather: string;
     quote: Proto.quote.QuoteResponse;
   }> {
-    console.log("AppService: getContent() called")
     const date    = await firstValueFrom(this.dateClient.getCurrentDate({}));
     const weather = await firstValueFrom(this.weatherClient.getWeather({ date }));
     const quote   = await firstValueFrom(this.quoteClient.getQuote({ date, weather: weather.weather }));
 
     const res = { date, weather: weather.weather, quote };
-    console.log("AppService: getContent() will return: ", JSON.stringify(res));
 
     return res;
   }

@@ -35,6 +35,9 @@ importers:
       '@repo/common-config':
         specifier: workspace:*
         version: link:../../packages/common-config
+      '@repo/grpc-logger':
+        specifier: workspace:*
+        version: link:../../packages/grpc-logger
       '@repo/protos':
         specifier: workspace:*
         version: link:../../packages/protos
@@ -495,6 +498,19 @@ importers:
       typescript-eslint:
         specifier: ^8.30.1
         version: 8.30.1(eslint@9.25.0)(typescript@5.8.2)
+
+  packages/grpc-logger:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^10
+        version: 10.4.17(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      rxjs:
+        specifier: ^7
+        version: 7.8.2
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
 
   packages/protos:
     dependencies:
@@ -1143,6 +1159,19 @@ packages:
       '@swc/cli':
         optional: true
       '@swc/core':
+        optional: true
+
+  '@nestjs/common@10.4.17':
+    resolution: {integrity: sha512-NKzPA4Tb35XjlxizsT8KZb3CCX8tNKj5EnsXsTl/gZX//uAWccBsqB8BjU69x/u4/kQ0106/Kt6PP+yrHAez0w==}
+    peerDependencies:
+      class-transformer: '*'
+      class-validator: '*'
+      reflect-metadata: ^0.1.12 || ^0.2.0
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      class-transformer:
+        optional: true
+      class-validator:
         optional: true
 
   '@nestjs/common@11.1.0':
@@ -5147,6 +5176,17 @@ snapshots:
       - esbuild
       - uglify-js
       - webpack-cli
+
+  '@nestjs/common@10.4.17(reflect-metadata@0.2.2)(rxjs@7.8.2)':
+    dependencies:
+      file-type: 20.4.1
+      iterare: 1.2.1
+      reflect-metadata: 0.2.2
+      rxjs: 7.8.2
+      tslib: 2.8.1
+      uid: 2.0.2
+    transitivePeerDependencies:
+      - supports-color
 
   '@nestjs/common@11.1.0(reflect-metadata@0.2.2)(rxjs@7.8.2)':
     dependencies:
