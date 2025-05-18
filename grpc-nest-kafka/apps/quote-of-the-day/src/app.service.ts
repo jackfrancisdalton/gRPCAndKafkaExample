@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
 import * as Proto from '@repo/protos';
+import { createLoggingClient } from '@repo/grpc-logger'
 
 interface DateService {
   getCurrentDate(request: Proto.date.DateRequest): Observable<Proto.date.DateResponse>;
@@ -17,23 +18,23 @@ export class AppService {
   private weatherClient: WeatherService;
 
   constructor(
-    @Inject('DATE_SERVICE') private dClient: ClientGrpc,
-    @Inject('WEATHER_SERVICE') private wClient: ClientGrpc,
+    @Inject('DATE_SERVICE') private dateGrpcClient: ClientGrpc,
+    @Inject('WEATHER_SERVICE') private weatherCGrpclient: ClientGrpc,
   ) {
-    this.dateClient    = this.dClient.getService<DateService>('DateService');
-    this.weatherClient = this.wClient.getService<WeatherService>('WeatherService');
+    this.dateClient    = createLoggingClient(
+      this.dateGrpcClient.getService<DateService>('DateService'),
+      'DateService',
+    );
+    this.weatherClient = createLoggingClient(
+      this.weatherCGrpclient.getService<WeatherService>('WeatherService'),
+      'WeatherService',
+    );
   }
 
   async getQuote(): Promise<Proto.quote.QuoteResponse> {
-    console.log('AppService: getQuote() called');
   
-    console.log('AppService: calling DateService.CurrentDate()');
     const dateRes    = await firstValueFrom(this.dateClient.getCurrentDate({}));
-    console.log('AppService: DateService.CurrentDate() returned: ', JSON.stringify(dateRes));
-
-    console.log('AppService: calling WeatherService.GetWeather()');
     const weatherRes = await firstValueFrom(this.weatherClient.getWeather({ date: dateRes }));
-    console.log('AppService: WeatherService.GetWeather() returned: ', JSON.stringify(weatherRes));
 
     const map = {
       sunny:  ['Sunshine is the best medicine.', 'Unknown', '2020-06-01'],
@@ -47,7 +48,6 @@ export class AppService {
     const daysSince = Math.floor((new Date(dateRes.iso).getTime() - new Date(since).getTime())/(1000*60*60*24));
 
     const res = { quote, author, daysSince };
-    console.log('AppService: getQuote() will return: ', JSON.stringify(res));
     
     return res;
   }
