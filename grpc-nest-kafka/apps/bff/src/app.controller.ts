@@ -12,7 +12,6 @@ export class AppController {
     weather: string;
     quote: Proto.quote.QuoteResponse;
   }> {
-    console.log('AppController: getContent() called')
     return await this.appService.getContent();
   }
 }

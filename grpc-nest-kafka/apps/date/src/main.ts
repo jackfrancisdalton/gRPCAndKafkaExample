@@ -15,6 +15,5 @@ async function bootstrap() {
     },
   );
   await app.listen();
-  console.log('Date gRPC server listening');
 }
 bootstrap();

@@ -9,7 +9,6 @@ export class AppController {
 
   @GrpcMethod('WeatherService', 'GetWeather')
   async getWeather(_: weather.WeatherRequest): Promise<weather.WeatherResponse> {
-    console.log('AppController: getWeather() called');
     return this.appService.getWeather();
   }
 }

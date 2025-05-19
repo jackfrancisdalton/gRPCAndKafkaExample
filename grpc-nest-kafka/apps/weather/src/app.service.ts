@@ -29,19 +29,18 @@ export class AppService {
 
   async getWeather(): Promise<Proto.weather.WeatherResponse> {
     const date = await firstValueFrom(this.dateClient.getCurrentDate({}));
-    console.log('DATE:', date.iso)
-
     const options: string[] = ['sunny', 'slightly rainy', 'cloudy', 'windy'];
-    const idx = (date.day % options.length);
+    const idx = (date.minute % options.length);
 
     return { weather: options[idx] || "FAIL" };
   }
 
-  @Interval(30_000)
+  @Interval(60_000)
   private async publishWeather(): Promise<void> {
 
     const { weather } = await this.getWeather();
-    console.log(`Publishing weather update... to ${weather}`);
+
+    console.log('[weather] publishing', weather);
     this.kafkaClient.emit('weather-updates', {
       weather,
       timestamp: Date.now(),

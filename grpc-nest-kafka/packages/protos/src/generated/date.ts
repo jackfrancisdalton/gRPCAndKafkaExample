@@ -21,7 +21,7 @@ import {
 
 export const protobufPackage = "date";
 
-/** The date service simply returns “today” in a structured form. */
+/** The date service simply returns "now" in a structured form. */
 export interface DateRequest {
 }
 
@@ -29,8 +29,9 @@ export interface DateResponse {
   year: number;
   month: number;
   day: number;
-  /** Also include an ISO-formatted date string if you like */
   iso: string;
+  hour: number;
+  minute: number;
 }
 
 function createBaseDateRequest(): DateRequest {
@@ -77,7 +78,7 @@ export const DateRequest: MessageFns<DateRequest> = {
 };
 
 function createBaseDateResponse(): DateResponse {
-  return { year: 0, month: 0, day: 0, iso: "" };
+  return { year: 0, month: 0, day: 0, iso: "", hour: 0, minute: 0 };
 }
 
 export const DateResponse: MessageFns<DateResponse> = {
@@ -93,6 +94,12 @@ export const DateResponse: MessageFns<DateResponse> = {
     }
     if (message.iso !== "") {
       writer.uint32(34).string(message.iso);
+    }
+    if (message.hour !== 0) {
+      writer.uint32(40).int32(message.hour);
+    }
+    if (message.minute !== 0) {
+      writer.uint32(48).int32(message.minute);
     }
     return writer;
   },
@@ -136,6 +143,22 @@ export const DateResponse: MessageFns<DateResponse> = {
           message.iso = reader.string();
           continue;
         }
+        case 5: {
+          if (tag !== 40) {
+            break;
+          }
+
+          message.hour = reader.int32();
+          continue;
+        }
+        case 6: {
+          if (tag !== 48) {
+            break;
+          }
+
+          message.minute = reader.int32();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -151,6 +174,8 @@ export const DateResponse: MessageFns<DateResponse> = {
       month: isSet(object.month) ? globalThis.Number(object.month) : 0,
       day: isSet(object.day) ? globalThis.Number(object.day) : 0,
       iso: isSet(object.iso) ? globalThis.String(object.iso) : "",
+      hour: isSet(object.hour) ? globalThis.Number(object.hour) : 0,
+      minute: isSet(object.minute) ? globalThis.Number(object.minute) : 0,
     };
   },
 
@@ -168,6 +193,12 @@ export const DateResponse: MessageFns<DateResponse> = {
     if (message.iso !== "") {
       obj.iso = message.iso;
     }
+    if (message.hour !== 0) {
+      obj.hour = Math.round(message.hour);
+    }
+    if (message.minute !== 0) {
+      obj.minute = Math.round(message.minute);
+    }
     return obj;
   },
 
@@ -180,6 +211,8 @@ export const DateResponse: MessageFns<DateResponse> = {
     message.month = object.month ?? 0;
     message.day = object.day ?? 0;
     message.iso = object.iso ?? "";
+    message.hour = object.hour ?? 0;
+    message.minute = object.minute ?? 0;
     return message;
   },
 };
