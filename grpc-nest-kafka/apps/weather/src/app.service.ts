@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc, ClientKafka } from '@nestjs/microservices';
 import * as Proto from '@repo/protos';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -29,16 +29,19 @@ export class AppService {
 
   async getWeather(): Promise<Proto.weather.WeatherResponse> {
     const date = await firstValueFrom(this.dateClient.getCurrentDate({}));
+    console.log('DATE:', date.iso)
+
     const options: string[] = ['sunny', 'slightly rainy', 'cloudy', 'windy'];
     const idx = (date.day % options.length);
 
     return { weather: options[idx] || "FAIL" };
   }
 
-  @Interval(10_000)
+  @Interval(30_000)
   private async publishWeather(): Promise<void> {
-    console.log('Publishing weather update...');
+
     const { weather } = await this.getWeather();
+    console.log(`Publishing weather update... to ${weather}`);
     this.kafkaClient.emit('weather-updates', {
       weather,
       timestamp: Date.now(),
