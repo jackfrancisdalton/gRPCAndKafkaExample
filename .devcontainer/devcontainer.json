@@ -6,20 +6,11 @@
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
 	"features": {
 		"ghcr.io/devcontainers-extra/features/nx-npm:1": {}
-	}
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	},
+	// Map the dev container into the same container the kafka container is running on to allow docker-network-communciation
+	// between the dev container and the kafka container
+	"runArgs": [
+		// "--add-host=host.docker.internal:host-gateway"
+		"--network=kafka-service_default"
+	],	
 }
