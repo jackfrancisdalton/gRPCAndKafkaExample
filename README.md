@@ -1,17 +1,19 @@
 ## Project Overview
-This project is intended for learning purposes, demonstrating how to configure NestJs microservices that communicate over gRPC inside of a Monorepo (using Turborepo) structure
+This project is intended for learning purposes, demonstrating a simple configuration of NestJs microservices that communicate over gRPC and Kafka inside of a Monorepo (using Turborepo).
 
-> Disclaimer: The actual application being implemented here does not warrent a microservices approach given how simple it is, the simplicity of the business logic and limited scope of each microservices are to make understanding the structure/gRPC elements easier without getting bogged down in more complex business logic.
+> Disclaimer: The actual application being implemented here does not justify this approach in the real world, it' trivial, the simplicity of the business logic and limited scope of each microservices is only done to make understanding the structure/gRPC/kafka elements easier without getting bogged down in more complex business logic.
 
 ## How to run:
 1. Clone the repository
+2. `cd` into the kafka directory and `docker compose up`
 2. (optional) Open the repository in VS-code with the dev-container 
 3. navigate to grpc-nest-kafa directory in your terminal
 3. Run `pnpm install`
 4. Run `pnpm build` 
 3. Run `pnpm run dev`
 
-You should see the application spin up and be able to inspect the loggs from each of the microservices in the turborepo output.
+You should see the application spin up and be able to inspect the loggs from each of the microservices in the turborepo output. 
+It will expose it's only end point on port 3001 on localhost.
 
 
 ### Application Microservices
@@ -280,6 +282,3 @@ Turborepo solves this by caching each package/app, then if nothing has changed i
 
 To execute the Turbo scripts you simply run `pnpm turbo run build` or `pnpm turbo run dev`.
 
-# WIP: Future Improvements:
-- Clean up logging so it's more maintainable and informative for people using the app
-- Add Kafka docker container and integrate some basic behaviour
